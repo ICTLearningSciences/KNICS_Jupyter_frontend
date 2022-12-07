@@ -15,7 +15,12 @@ const NOTEBOOK_MODIFIED_EVENT = "NOTEBOOK_MODIFIED";
 const CELL_EXECUTION_BEGIN_EVENT = "CELL_EXECUTION_BEGIN";
 const CELL_EXECUTED_END_EVENT = "CELL_EXECUTION_END";
 
-const SERVER_ENDPOINT="http://localhost:8888";
+if ( process.env.REACT_APP_KNIC_ENGINE_URL ) {
+      var SERVER_ENDPOINT = `${process.env.REACT_APP_KNIC_ENGINE_URL}`
+    }
+else {
+    SERVER_ENDPOINT="http://localhost:8888";
+ }
 
 interface CellData {
   cellId: string;
@@ -113,7 +118,7 @@ async function onCellExecutionBegin(emitter:any, args:{notebook:Notebook, cell: 
   const parent: NotebookPanel = args?.notebook.parent as NotebookPanel;
   if (args?.cell.model && args.cell.model.type == 'code'){
     const model: ICodeCell = args.cell.model.toJSON() as ICodeCell;
-    
+
     const event: NotebookEvent = {
       eventData: {
         cell: toCellData(args.cell.model),
@@ -251,7 +256,7 @@ async function logActiveCell(emitter: INotebookTracker, args:Cell<ICellModel> | 
       eventName: CELL_SELECTED_EVENT,
       user: USER,
       session: SESSION,
-      timestamp: new Date().toISOString(), 
+      timestamp: new Date().toISOString(),
     };
     console.log(CELL_SELECTED_EVENT);
     console.log(JSON.stringify(event, null, 2));
