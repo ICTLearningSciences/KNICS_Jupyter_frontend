@@ -37,6 +37,11 @@ The `jlpm` command is JupyterLab's pinned version of
 # Clone the repo to your local environment
 # Change directory to the KNICS_Jupyter_frontend directory
 # Install package in development mode
+git clone https://github.com/ICTLearningSciences/KNICS_Jupyter_frontend
+cd KNICS_Jupyter_frontend
+
+npm i --save-dev @types/node # to access process.env
+
 pip install -e .
 # Link your development version of the extension with JupyterLab
 jupyter labextension develop . --overwrite
